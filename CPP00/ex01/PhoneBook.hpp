@@ -6,9 +6,13 @@
 class PhoneBook {
 	private:
 		Contact contacts[8];
-		
-	public:
+        int contactCount = 0;
 
+	public:
+        //PhoneBook();
+        void menu();
+        void addContact();
+        void searchContact();
 
 };
 
