@@ -5,14 +5,14 @@ void PhoneBook::menu(void) {
     std::cout << "** Welcome to the PhoneBook! **" << std::endl;
     std::cout << "*******************************" << std::endl;
 
-    std::cout << "1) ADD a new contact. (a)" << std::endl;
-    std::cout << "2) SEARCH a new contact. (s)" << std::endl;
-    std::cout << "3) EXIT. (e or q)" << std::endl;
-
+    
     char choice;
     
     do
     {
+        std::cout << "\n1) ADD a new contact. (a)" << std::endl;
+        std::cout << "2) SEARCH a new contact. (s)" << std::endl;
+        std::cout << "3) EXIT. (e or q)" << std::endl;
         std::cout << "\nPlease enter a choice: " << std::endl;
         std::cin >> choice;
         if (choice == 'a')
@@ -30,16 +30,23 @@ void PhoneBook::menu(void) {
 void PhoneBook::addContact(void) {
     std::string firstName, lastName, nickName, phoneNumber, darkestSecret;
 
+    std::getline(std::cin, firstName); //buffer temizliği -> araştır
+
+
     std::cout << "First name: ";
-    std::cin >> firstName;
+    std::getline(std::cin, firstName);
+
     std::cout << "Last name: ";
-    std::cin >> lastName;
+    std::getline(std::cin, lastName);
+
     std::cout << "Nickname: ";
-    std::cin >> nickName;
+    std::getline(std::cin, nickName);
+
     std::cout << "Phone number: ";
-    std::cin >> phoneNumber;
+    std::getline(std::cin, phoneNumber);
+
     std::cout << "Darkest secret: ";
-    std::cin >> darkestSecret;
+    std::getline(std::cin, darkestSecret);
 
     if (contactCount < 8) {
         contacts[contactCount].setFirstName(firstName);
@@ -57,20 +64,41 @@ void PhoneBook::addContact(void) {
     contactCount++;
 }
 
-void printTable(void) {
-    std::cout << "-------------------------------------" << std::endl;
-    std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
-    std::cout << "-------------------------------------" << std::endl;
+std::string PhoneBook::setSpace(std::string name) {
+    if (name.length() > 10) {
+        return name.substr(0, 9) + ".";
+    }
+    // std::string constructor'u -> araştır bi
+    return std::string(10 - name.length(), ' ') + name;
+}
+
+void PhoneBook::printTable(void) {
+    std::cout << "|" << setSpace("Index") << "|" << setSpace("First Name") << "|" << setSpace("Last Name") << "|" << setSpace("Nickname") << "|" << std::endl;
 
     for (int i = 0; i < contactCount; i++) {
-        std::cout << "| " << i << " | "
-                  << contacts[i].getFirstName() << " | "
-                  << contacts[i].getLastName() << " |" << std::endl;
+        std::cout << "|" << setSpace(std::to_string(i)) << "|"
+                  << setSpace(contacts[i].getFirstName()) << "|"
+                  << setSpace(contacts[i].getLastName()) << "|"
+                  << setSpace(contacts[i].getNickName()) << "|" << std::endl;
     }
-
-    std::cout << "-------------------------------------" << std::endl;
 }
 
 void PhoneBook::searchContact(void) {
+    printTable();
+    std::cout << "\nEnter the index of the contact to view details: ";
+    int index;
 
+    // segfault alyırosun geçersiz indexte dikkat ettt
+    
+    do {
+        std::cin >> index;
+        if (index >= 0 && index < contactCount) {
+            std::cout << "|" << setSpace(std::to_string(index)) << "|"
+                      << setSpace(contacts[index].getFirstName()) << "|"
+                      << setSpace(contacts[index].getLastName()) << "|"
+                      << setSpace(contacts[index].getNickName()) << "|" << std::endl;
+        } else {
+            std::cout << "Invalid index. Please try again." << std::endl;
+        }
+    } while (index < 0 || index >= contactCount);   
 }

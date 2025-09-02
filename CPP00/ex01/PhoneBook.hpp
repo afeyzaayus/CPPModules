@@ -13,6 +13,8 @@ class PhoneBook {
         void menu();
         void addContact();
         void searchContact();
+        void printTable();
+        std::string setSpace(std::string name);
 
 };
 
