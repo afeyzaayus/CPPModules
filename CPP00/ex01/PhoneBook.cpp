@@ -88,8 +88,13 @@ void PhoneBook::searchContact(void) {
     std::cout << "\nEnter the index of the contact to view details: ";
     int index;
 
-    // segfault alyırosun geçersiz indexte dikkat ettt
+    // hiç kimse yoksa hala garip bişeyler dönüyor
     
+    if (contactCount == 0) { // burayı soruştur
+        std::cout << "No contacts available to display." << std::endl;
+        return;
+    }
+
     do {
         std::cin >> index;
         if (index >= 0 && index < contactCount) {

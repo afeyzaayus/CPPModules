@@ -6,17 +6,14 @@
 class PhoneBook {
 	private:
 		Contact contacts[8];
-        int contactCount = 0;
+                int contactCount = 0;
 
 	public:
-        //PhoneBook();
-        void menu();
-        void addContact();
-        void searchContact();
-        void printTable();
-        std::string setSpace(std::string name);
-
+                void menu();
+                void addContact();
+                void searchContact();
+                void printTable();
+                std::string setSpace(std::string name);
 };
-
 
 #endif
