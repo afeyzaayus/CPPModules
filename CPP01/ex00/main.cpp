@@ -2,5 +2,12 @@
 
 int main()
 {
-    Zombie 
+    Zombie zombie("frankenstein");
+    zombie.announce();
+
+    Zombie *ptr = newZombie("dracula");
+    ptr->announce();
+    delete ptr;
+    return 0;
+
 }
